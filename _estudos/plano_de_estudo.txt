@@ -1,0 +1,42 @@
+Plano de Estudos e Implementação Passo a Passo (100% Gratuito)
+Fase 1: Ambiente Local (Docker)
+
+Instale o Docker Desktop.
+
+Baixe as imagens e suba containers para: PostgreSQL e RabbitMQ. Tudo rodando na sua máquina.
+
+Aprenda o básico de Go: sintaxe, structs, funções, goroutines.
+
+Escreva a API em Go (usando o framework Gin) que recebe um pedido e salva no PostgreSQL.
+
+Escreva o código para publicar uma mensagem no RabbitMQ (use a biblioteca github.com/streadway/amqp).
+
+Escreva o worker em Go que consome da fila do RabbitMQ e apenas imprime a mensagem no console.
+
+Conecte tudo: A API publica, o worker consome.
+
+Fase 2: Cloud (GCP - Free Tier)
+
+Crie uma conta na GCP (usando seu e-mail e cartão de crédito - NÃO SERÁ COBRADO se você ficar dentro dos limites gratuitos. Ative os alertas de billing para ficar tranquilo).
+
+Crie uma VM Instance do tipo e2-micro (é gratuita). Use uma imagem Ubuntu.
+
+Conecte-se à VM via SSH diretamente pelo console do GCP.
+
+Instale o Docker na VM.
+
+Transfira seus Dockerfiles e código Go para a VM (usando git clone é o mais fácil).
+
+Suba os containers Docker (seu app Go, RabbitMQ, PostgreSQL) na VM.
+
+Acesse sua API pública pela internet! Parabéns, seu sistema está na nuvem.
+
+Desafios Opcionais (Para ir mais longe):
+
+Terraform: Use Terraform para criar a infraestrutura na GCP (a VM, regras de firewall) de forma codificada, em vez de clicar no console.
+
+Kubernetes (GKE): Em vez de uma VM, use o Google Kubernetes Engine. Ele tem uma cota gratuita mensal. Containerize sua aplicação e suba-a como um pod em um cluster Kubernetes. Este é um passo enorme na sua carreira cloud.
+
+Múltiplos Workers: Levante 3 containers do seu worker e veja o RabbitMQ distribuir as mensagens entre eles (load balancing natural).
+
+TypeScript: Quer uma segunda linguagem? Reescreva a API frontend (que recebe o pedido) em Node.js/TypeScript/Express, mantendo o worker em Go.
