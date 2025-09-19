@@ -3,7 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"net/http"
-	"processamento_pedidos/cmd/internal/models"
+	"processamento_pedidos/internal/models"
 )
 
 func (h Handlers) registerUserEndpoints() {

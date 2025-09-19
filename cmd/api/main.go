@@ -1,9 +1,9 @@
 package main
 
 import (
-	"processamento_pedidos/cmd/internal/handlers"
-	"processamento_pedidos/cmd/internal/repositories"
-	"processamento_pedidos/cmd/internal/usecases"
+	"processamento_pedidos/internal/handlers"
+	"processamento_pedidos/internal/repositories"
+	"processamento_pedidos/internal/usecases"
 )
 
 // cadastrar e listar usuários

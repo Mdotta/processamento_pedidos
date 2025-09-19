@@ -1,8 +1,8 @@
 package repositories
 
 import (
-	"processamento_pedidos/cmd/internal/models"
-	"processamento_pedidos/cmd/internal/repositories/users"
+	"processamento_pedidos/internal/models"
+	"processamento_pedidos/internal/repositories/users"
 )
 
 type Repositories struct {

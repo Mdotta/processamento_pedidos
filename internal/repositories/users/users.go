@@ -2,7 +2,7 @@ package users
 
 import (
 	"fmt"
-	"processamento_pedidos/cmd/internal/models"
+	"processamento_pedidos/internal/models"
 )
 
 type Users struct {

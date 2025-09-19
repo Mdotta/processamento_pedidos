@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"processamento_pedidos/cmd/internal/models"
+	"processamento_pedidos/internal/models"
 )
 
 func main() {

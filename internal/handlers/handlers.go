@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log/slog"
 	"net/http"
-	"processamento_pedidos/cmd/internal/usecases"
+	"processamento_pedidos/internal/usecases"
 )
 
 type Handlers struct {

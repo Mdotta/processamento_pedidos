@@ -3,8 +3,8 @@ package usecases
 import (
 	"errors"
 	"log/slog"
-	"processamento_pedidos/cmd/internal/models"
-	"processamento_pedidos/cmd/internal/repositories"
+	"processamento_pedidos/internal/models"
+	"processamento_pedidos/internal/repositories"
 
 	"github.com/google/uuid"
 )
