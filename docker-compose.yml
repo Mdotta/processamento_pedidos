@@ -6,8 +6,9 @@ services:
     image: postgres:latest
     container_name: postgres
     environment:
-      POSTGRES_USER: master
-      POSTGRES_PASSWORD: localpass
+      POSTGRES_USER: dotta
+      POSTGRES_PASSWORD: safepass
+      POSTGRES_DB: processamento_pedidos
       # POSTGRES_DB: meu_db # Opcional: Cria um database com nome específico na inicialização
       # POSTGRES_USER: meu_user # Opcional: Cria um usuário customizado (o padrão é 'postgres')
     ports:
