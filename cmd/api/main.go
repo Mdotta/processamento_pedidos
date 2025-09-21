@@ -6,6 +6,10 @@ import (
 	"processamento_pedidos/internal/handlers"
 	"processamento_pedidos/internal/repositories"
 	"processamento_pedidos/internal/usecases"
+
+	"github.com/golang-migrate/migrate/v4"
+	"github.com/golang-migrate/migrate/v4/database/postgres"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
 )
 
 // cadastrar e listar usuários
@@ -13,12 +17,15 @@ import (
 func main() {
 	//create connection to db
 	connStr := "user=dotta password=safepass dbname=processamento_pedidos sslmode=disable"
+
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
 		log.Fatal(err)
 	}
 	//make sure connection will be closed when main function ends
 	defer db.Close()
+
+	initDatabase(db)
 
 	//create repositories, usecases and handlers
 	//pass db connection to repositories
@@ -28,4 +35,26 @@ func main() {
 
 	//start http server listening to port 8080
 	h.Listen(8080)
+}
+
+func initDatabase(db *sql.DB) {
+	driver, err := postgres.WithInstance(db, &postgres.Config{})
+	if err != nil {
+		log.Fatalf("could not create database driver: %v", err)
+	}
+
+	m, err := migrate.NewWithDatabaseInstance(
+		"file://../../migrations",
+		"postgres",
+		driver,
+	)
+	if err != nil {
+		log.Fatalf("could not create migrate instance: %v", err)
+	}
+
+	if err := m.Up(); err != nil && err != migrate.ErrNoChange {
+		log.Fatalf("could not run migrations: %v", err)
+	}
+
+	log.Println("Database migrations applied successfully")
 }

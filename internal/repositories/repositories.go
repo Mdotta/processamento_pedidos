@@ -13,7 +13,7 @@ type Repositories struct {
 		GetAll() []models.User
 		Add(newUser models.User)
 		EmailInUse(email string) bool
-		GetByID(id uuid.UUID) (*models.User, error)
+		GetWithFilters(id *uuid.UUID, email *string) (*models.User, error)
 	}
 }
 

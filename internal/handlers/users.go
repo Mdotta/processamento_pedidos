@@ -43,6 +43,7 @@ func (h Handlers) addUser(w http.ResponseWriter, r *http.Request) {
 
 func (h Handlers) GetUserByID(w http.ResponseWriter, r *http.Request) {
 	idStr := r.URL.Query().Get("id")
+	emailStr := r.URL.Query().Get("email")
 	userId, err := uuid.Parse(idStr)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -50,7 +51,7 @@ func (h Handlers) GetUserByID(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(models.ErrorResponse{Reason: "invalid user id"})
 		return
 	}
-	user, err := h.useCases.User.GetById(userId)
+	user, err := h.useCases.User.GetById(&userId, &emailStr)
 	if err != nil || user == nil {
 		w.WriteHeader(http.StatusNotFound)
 		json.NewEncoder(w).Encode(models.ErrorResponse{Reason: "user not found"})

@@ -5,14 +5,16 @@ import (
 )
 
 type User struct {
-	ID    uuid.UUID
-	Name  string
-	Email string
+	ID           uuid.UUID
+	Username     string
+	Email        string
+	PasswordHash string // not exported in responses
 }
 
 type CreateUserRequest struct {
-	Name  string `json:"name"`
-	Email string `json:"email"`
+	Username string `json:"username"`
+	Email    string `json:"email"`
+	Password string `json:"password"` // not stored, just for creation
 }
 
 type CreateUserResponse struct {
@@ -21,15 +23,15 @@ type CreateUserResponse struct {
 
 // if I need to hide a user value on response, I can change this struct
 type GetUserResponse struct {
-	ID    uuid.UUID `json:"id"`
-	Name  string    `json:"name"`
-	Email string    `json:"email"`
+	ID       uuid.UUID `json:"id"`
+	Username string    `json:"username"`
+	Email    string    `json:"email"`
 }
 
 func (u User) ToGetUserResponse() GetUserResponse {
 	return GetUserResponse{
-		ID:    u.ID,
-		Name:  u.Name,
-		Email: u.Email,
+		ID:       u.ID,
+		Username: u.Username,
+		Email:    u.Email,
 	}
 }

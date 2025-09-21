@@ -10,8 +10,8 @@ import (
 
 func main() {
 	req := models.CreateUserRequest{
-		Name:  "novo usuário",
-		Email: "email@novo.com",
+		Username: "novo usuário",
+		Email:    "email@novo.com",
 	}
 	b, err := json.Marshal(req)
 	if err != nil {

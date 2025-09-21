@@ -18,7 +18,7 @@ func New(db *sql.DB) *Users {
 }
 
 func (u Users) GetAll() []models.User {
-	rows, err := u.db.Query("SELECT id, name, email FROM users")
+	rows, err := u.db.Query("SELECT id, username, email FROM users")
 	if err != nil {
 		fmt.Println("error querying users:", err)
 		return nil
@@ -27,13 +27,13 @@ func (u Users) GetAll() []models.User {
 
 	users := []models.User{}
 	for rows.Next() {
-		var idStr, name, email string
-		if err := rows.Scan(&idStr, &name, &email); err != nil {
+		var idStr, username, email string
+		if err := rows.Scan(&idStr, &username, &email); err != nil {
 			fmt.Println("error scanning user:", err)
 			continue
 		}
 		id, _ := uuid.Parse(idStr)
-		users = append(users, models.User{ID: id, Name: name, Email: email})
+		users = append(users, models.User{ID: id, Username: username, Email: email})
 	}
 	return users
 }
@@ -49,15 +49,30 @@ func (u Users) EmailInUse(email string) bool {
 }
 
 func (u Users) Add(newUser models.User) {
-	_, err := u.db.Exec("INSERT INTO users (id, name, email) VALUES ($1, $2, $3)", newUser.ID.String(), newUser.Name, newUser.Email)
+	_, err := u.db.Exec("INSERT INTO users (id, username, email,password_hash,created_at,updated_at) VALUES ($1, $2, $3,$4,now(),now())",
+		newUser.ID, newUser.Username, newUser.Email, newUser.PasswordHash)
 	if err != nil {
 		fmt.Println("error adding user:", err)
 	}
 }
 
-func (u Users) GetByID(id uuid.UUID) (*models.User, error) {
-	query := "SELECT * FROM users WHERE id=$1"
-	rows, err := u.db.Query(query, id.String())
+func (u Users) GetWithFilters(id *uuid.UUID, email *string) (*models.User, error) {
+	query := "SELECT * FROM users"
+	hasFiltersAlready := false
+	if id != nil {
+		query += fmt.Sprintf("WHERE id='%s'", id.String())
+		hasFiltersAlready = true
+	}
+	if email != nil {
+		if hasFiltersAlready {
+			query += " AND "
+		} else {
+			query += " WHERE "
+		}
+		query += fmt.Sprintf("email='%s'", *email)
+	}
+
+	rows, err := u.db.Query(query)
 	if err != nil {
 		return nil, err
 	}
@@ -65,7 +80,7 @@ func (u Users) GetByID(id uuid.UUID) (*models.User, error) {
 
 	var user models.User
 	if rows.Next() {
-		err := rows.Scan(&user.ID, &user.Name, &user.Email)
+		err := rows.Scan(&user.ID, &user.Username, &user.Email)
 		if err != nil {
 			return nil, err
 		}
