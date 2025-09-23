@@ -35,7 +35,7 @@ func main() {
 	h := handlers.New(useCases)
 
 	//start http server listening to port 8080
-	h.Listen(8080)
+	h.Listen(10000)
 }
 
 func initDatabase(db *sql.DB) {
