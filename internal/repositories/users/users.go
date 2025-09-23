@@ -87,3 +87,13 @@ func (u Users) GetWithFilters(id *uuid.UUID, email *string) (*models.User, error
 	}
 	return &user, err
 }
+
+func (u Users) UserIdExists(ID uuid.UUID) bool {
+	var exists bool
+	err := u.db.QueryRow("SELECT EXISTS(SELECT 1 FROM users WHERE id=$1)", ID).Scan(&exists)
+	if err != nil {
+		fmt.Println("error checking user id:", err)
+		return false
+	}
+	return exists
+}

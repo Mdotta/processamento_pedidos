@@ -17,7 +17,7 @@ func New(useCases *usecases.UseCases) *Handlers {
 
 func (h Handlers) Listen(port int) error {
 	h.registerUserEndpoints()
-
+	h.registerrankingScoreEndpoints()
 	slog.Info("listening on", "port", port)
 	return http.ListenAndServe(
 		fmt.Sprintf(":%v", port),
