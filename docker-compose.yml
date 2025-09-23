@@ -18,39 +18,7 @@ services:
     networks:
       - processamento_pedidos
 
-  # Container do RabbitMQ (juntando com o anterior)
-  rabbitmq:
-    image: rabbitmq:3-management
-    container_name: rabbitmq
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-    volumes:
-      - rabbitmq_data:/var/lib/rabbitmq
-    networks:
-      - processamento_pedidos
-
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@dotta.com  # Email para login no pgAdmin (OBRIGATÓRIO)
-      PGADMIN_DEFAULT_PASSWORD: admin         # Senha para login no pgAdmin (OBRIGATÓRIO)
-    ports:
-      - "16543:80"  # Mapeia a porta 80 do container para a 16543 da sua máquina
-    volumes:
-      - pgadmin_data:/var/lib/pgadmin
-    depends_on:
-      - postgres  # Garante que o PostgreSQL inicie primeiro
-    networks:
-      - processamento_pedidos
-      
 # Define os volumes para persistência de dados
 volumes:
   postgres_data:
-  rabbitmq_data:
-  pgadmin_data:
 # Definição de uma rede comum para que os containers se "enxerguem" pelo nome
-networks:
-  processamento_pedidos:
-    driver: bridge

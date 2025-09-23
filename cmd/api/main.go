@@ -16,7 +16,8 @@ import (
 // handlers <- usecases <- repositories
 func main() {
 	//create connection to db
-	connStr := "user=dotta password=safepass dbname=processamento_pedidos sslmode=disable"
+	//add host and port
+	connStr := "postgresql://dotta:2UqCRIlLqFCcrO46Mi9omsu3gVU1VKrW@dpg-d399qi3e5dus73ao2nl0-a.virginia-postgres.render.com/processamento_pedidos"
 
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
